@@ -1,8 +1,17 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+require('dotenv').config();
 
 // Import the database connection
 const sequelize = require('./config/db');
+
+// Import the routes
+const apiRoutes = require('./routes/api');
+
+// Middleware
+app.use(cors());
+app.use(express.json());
 
 // Server connection
 
