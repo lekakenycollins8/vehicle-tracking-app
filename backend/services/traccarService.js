@@ -21,6 +21,16 @@ class TraccarService {
             throw new Error(`Failed to fetch devices from Traccar API: ${error.message}`);
         }
     }
+
+    async getPositions(deviceId) {
+        try {
+            const response = await this.client.get(`positions?deviceId=${deviceId}`);
+            return response.data;
+        } catch (error) {
+            throw new Error(`Failed to fetch positions from Traccar API: ${error.message}`);
+        }
+    }
+
     async getEvents(deviceId, from, to) {
         try {
             const response = await this.client.get('events', {
