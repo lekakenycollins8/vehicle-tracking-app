@@ -2,22 +2,18 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 // Encode special characters in the password
-
-const encodedPassword = encodeURIComponent(process.env.SUPABASE_DB_PASSWORD);
+const encodedPassword = encodeURIComponent(process.env.DB_PASSWORD);
 
 // Connection string
-
-const connectionString = `postgres://${process.env.SUPABASE_DB_USER}:${encodedPassword}@${process.env.SUPABASE_DB_HOST}:${process.env.SUPABASE_DB_PORT}/${process.env.SUPABASE_DB_NAME}`;
+const connectionString = `mysql://${process.env.DB_USER}:${encodedPassword}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
 // Create a new instance of Sequelize
-
 const sequelize = new Sequelize(connectionString, {
-    dialect: 'postgres',
-    logging: false,
+    dialect: 'mysql', // Set dialect to MySQL
+    logging: false,   // Disable logging; set to true for debug
 });
 
 // Database connection
-
 sequelize
     .authenticate()
     .then(() => {
@@ -27,7 +23,9 @@ sequelize
         console.error('Unable to connect to the database:', error);
     });
 
-sequelize.sync({force: false, alter:true})
+// Synchronize models
+sequelize
+    .sync({ force: false, alter: true })
     .then(() => {
         console.log('Models synchronized successfully.');
     })

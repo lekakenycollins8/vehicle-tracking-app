@@ -18,12 +18,22 @@ const Vehicle = sequelize.define('Vehicle', {
         allowNull: false
     },
     lastPosition: {
-        type: DataTypes.JSONB,
+        type: DataTypes.JSON, 
         allowNull: true
     },
     status: {
-        type: DataTypes.ENUM('active', 'inactive'),
+        type: DataTypes.ENUM('active', 'inactive'), 
         defaultValue: 'active',
+        allowNull: false
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
         allowNull: false
     }
 });
