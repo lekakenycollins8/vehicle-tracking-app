@@ -17,7 +17,7 @@ const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect }) => {
 
   const fetchVehicles = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/devices');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/devices`);
       const data = await response.json();
       setVehicles(data);
     } catch (error) {
