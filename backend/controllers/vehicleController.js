@@ -66,29 +66,41 @@ exports.getVehicleHistory = async (req, res) => {
 
 exports.createVehicle = async (req, res) => {
     try {
-        const { name, traccarDeviceId } = req.body;
-        
-        // Validate required fields
-        if (!name || !traccarDeviceId) {
-            return res.status(400).json({ 
-                message: 'Name and traccarDeviceId are required' 
-            });
-        }
+        const {
+            name,
+            uniqueId,
+            status,
+            disabled,
+            lastUpdate,
+            positionId,
+            groupId,
+            phone,
+            model,
+            contact,
+            category,
+            attributes
+        } = req.body;
 
-        // Check if device exists in Traccar
-        const traccarService = new TraccarService();
-        try {
-            await traccarService.getPositions(traccarDeviceId);
-        } catch (error) {
-            return res.status(400).json({ 
-                message: 'Invalid traccarDeviceId - device not found in Traccar' 
+        // Validate required fields
+        if (!name || !uniqueId || !status || !lastUpdate) {
+            return res.status(400).json({
+                message: 'Name, uniqueId, status, and lastUpdate are required'
             });
         }
 
         const vehicle = await Vehicle.create({
             name,
-            traccarDeviceId,
-            status: 'active'
+            uniqueId,
+            status,
+            disabled: disabled || false,
+            lastUpdate: new Date(lastUpdate),
+            positionId,
+            groupId,
+            phone,
+            model,
+            contact,
+            category,
+            attributes
         });
 
         res.status(201).json(vehicle);

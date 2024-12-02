@@ -12,13 +12,13 @@ const Vehicle = sequelize.define('Vehicle', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    traccarDeviceId: {
+    uniqueId: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false
     },
-    lastPosition: {
-        type: DataTypes.JSON, 
+    lastUpdate: {
+        type: DataTypes.DATE, 
         allowNull: true
     },
     status: {
@@ -26,15 +26,41 @@ const Vehicle = sequelize.define('Vehicle', {
         defaultValue: 'active',
         allowNull: false
     },
-    createdAt: {
+    disabled: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    lastUpdate: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
         allowNull: false
     },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false
+    positionId: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    groupId: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    model: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    contact: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    category: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    attributes: {
+        type: DataTypes.JSON,
+        allowNull: true
     }
 });
 
