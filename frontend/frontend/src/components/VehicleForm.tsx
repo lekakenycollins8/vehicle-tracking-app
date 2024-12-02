@@ -37,9 +37,6 @@ const DeviceForm: React.FC<{ onDeviceAdded: () => void }> = ({ onDeviceAdded }) 
             <Form.Item name="status" label="Status" rules={[{ required: true, message: 'Please input the status!' }]}>
                 <Input />
             </Form.Item>
-            <Form.Item name="lastUpdate" label="Last Update" rules={[{ required: true, message: 'Please input the last update date!' }]}>
-                <Input />
-            </Form.Item>
             <Form.Item>
                 <Button type="primary" htmlType="submit">Create Device</Button>
             </Form.Item>
