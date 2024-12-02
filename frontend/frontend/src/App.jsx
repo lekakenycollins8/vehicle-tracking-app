@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Row, Col } from 'antd';
-// import VehicleList from './components/VehicleList';
+import VehicleList from './components/VehicleList';
 import VehicleMap from './components/VehicleMap';
 // import { Vehicle } from './types/vehicle';
 import './App.css';
