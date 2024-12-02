@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const vehicleController = require('../controllers/vehicleController');
+const authController = require('../controllers/authController');
+
+// auth routes
+router.post('/register', authController.register);
+router.post('/login', authController.login);
 
 //Vehicle Routes
 router.get('/devices', vehicleController.getAllVehicles);
