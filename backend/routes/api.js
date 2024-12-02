@@ -8,11 +8,11 @@ router.get('/positions/:deviceId', vehicleController.getVehiclePositions);
 router.get('/events/:deviceId', vehicleController.getVehicleEvents);
 
 // Vehicle management
-router.post('/vehicles', vehicleController.createVehicle);
-router.get('/vehicles/:id', vehicleController.getVehicleById);
-router.put('/vehicles/:id', vehicleController.updateVehicle);
+router.post('/devices', vehicleController.createVehicle);
+router.get('/devices/:id', vehicleController.getVehicleById);
+router.put('/devices/:id', vehicleController.updateVehicle);
 
 // Position history
-router.get('/vehicles/:id/history', vehicleController.getVehicleHistory);
+router.get('/devices/:id/history', vehicleController.getVehicleHistory);
 
 module.exports = router;
