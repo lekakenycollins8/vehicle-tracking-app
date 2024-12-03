@@ -14,7 +14,7 @@ const Vehicle = sequelize.define('Vehicle', {
     },
     uniqueId: {
         type: DataTypes.STRING,
-        unique: true,
+        unique: false,
         allowNull: false
     },
     lastUpdate: {
