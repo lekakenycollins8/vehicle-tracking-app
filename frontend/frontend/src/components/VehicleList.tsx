@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Space, Tag, message, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import type { ColumnsType } from 'antd/es/table';
 import { Vehicle } from '../types/vehicle';
 import axiosInstance from '../axiosInstance';
@@ -68,20 +69,14 @@ const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect, onVehicleDel
       key: 'actions',
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => onVehicleSelect(record)}>View on Map</a>
+          <Link to={`/dashboard/vehicles/${record.id}`}>View Details</Link>
+          <Link to={`/dashboard/vehicles/${record.id}/map`}>View Map</Link>
+          <Link to={`/dashboard/vehicles/${record.id}/events`}>View Events</Link>
+          <Link to={`/dashboard/vehicles/${record.id}/update`}>Update</Link>
+          <Button onClick={() => handleDelete(record.id)} danger>Delete</Button>
         </Space>
       ),
     },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (_, record) => (
-          <Space size="middle">
-              <Button onClick={() => onVehicleSelect(record)}>View</Button>
-              <Button onClick={() => handleDelete(record.id)} danger>Delete</Button>
-          </Space>
-      ),
-  },
   ];
 
   return (
