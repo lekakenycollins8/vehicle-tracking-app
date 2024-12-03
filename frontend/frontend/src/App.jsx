@@ -1,42 +1,37 @@
-import React, { useState } from 'react';
-import { Layout, Row, Col } from 'antd';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './components/pages/Dashboard';
 import VehicleList from './components/VehicleList';
+import VehicleAlerts from './components/VehicleAlerts';
+import VehicleTrips from './components/VehicleTrips';
+import VehicleHistory from './components/VehicleHistory';
 import VehicleMap from './components/VehicleMap';
+import VehicleDetail from './components/VehicleDetail';
+import VehicleEvents from './components/VehicleEvents';
 import VehicleForm from './components/VehicleForm';
-import './App.css';
-
-const { Header, Content } = Layout;
+import VehicleUpdateForm from './components/VehicleUpdateForm';
+import LoginForm from './components/pages/LoginForm';
+import RegisterForm from './components/pages/RegistrationForm';
 
 const App = () => {
-    const [selectedVehicle, setSelectedVehicle] = useState(null);
-
-    const handleVehicleSelect = (vehicle) => {
-        setSelectedVehicle(vehicle);
-    };
-
-    const handleVehicleAdded = () => {
-        // Logic to refresh vehicle list or fetch vehicles again
-    };
-
     return (
-        <Layout className="layout">
-            <Header>
-                <h1 style={{ color: 'white' }}>Vehicle Tracking System</h1>
-            </Header>
-            <Content style={{ padding: '24px' }}>
-                <Row gutter={[24, 24]}>
-                    <Col xs={24} lg={8}>
-                        <VehicleForm onVehicleAdded={handleVehicleAdded} />
-                        <VehicleList onVehicleSelect={handleVehicleSelect} />
-                    </Col>
-                    <Col xs={24} lg={16}>
-                        <div style={{ height: '500px', background: '#fff', padding: '24px' }}>
-                            <VehicleMap selectedVehicle={selectedVehicle} />
-                        </div>
-                    </Col>
-                </Row>
-            </Content>
-        </Layout>
+        <Router>
+            <Routes>
+                <Route path="/" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
+                <Route path="/dashboard" element={<Dashboard />}>
+                    <Route path="vehicles" element={<VehicleList />} />
+                    <Route path="alerts" element={<VehicleAlerts />} />
+                    <Route path="trips" element={<VehicleTrips />} />
+                    <Route path="history" element={<VehicleHistory />} />
+                    <Route path="vehicles/:id" element={<VehicleDetail />} />
+                    <Route path="vehicles/:id/map" element={<VehicleMap />} />
+                    <Route path="vehicles/:id/events" element={<VehicleEvents />} />
+                    <Route path="vehicles/create" element={<VehicleForm />} />
+                    <Route path="vehicles/:id/update" element={<VehicleUpdateForm />} />
+                </Route>
+            </Routes>
+        </Router>
     );
 };
 
