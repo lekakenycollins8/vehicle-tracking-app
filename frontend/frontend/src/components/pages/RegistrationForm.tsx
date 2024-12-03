@@ -7,7 +7,7 @@ const RegisterForm: React.FC = () => {
 
     const onFinish = async (values: any) => {
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/register`, values);
+            const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/register`, values);
             message.success('Registration successful!');
             form.resetFields();
         } catch (error) {

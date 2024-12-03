@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const login = (email, password) => async (dispatch) => {
     try {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, { email, password });
+        const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/login`, { email, password });
         const { token, user } = response.data;
 
         // Store the token in local storage
