@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Space, Tag } from 'antd';
+import { Table, Space, Tag, message, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Vehicle } from '../types/vehicle';
 import axiosInstance from '../axiosInstance';
 
 interface VehicleListProps {
   onVehicleSelect: (vehicle: Vehicle) => void;
+  onVehicleDeleted: () => void;
 }
 
-const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect }) => {
+const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect, onVehicleDeleted }) => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await axiosInstance.delete(`/devices/${id}`);
+      message.success('Vehicle deleted successfully!');
+      onVehicleDeleted();
+    } catch (error) {
+      message.error('Failed to delete vehicle: ' + error.response.data.message);
+    }
+  };
 
   useEffect(() => {
     fetchVehicles();
@@ -61,6 +72,16 @@ const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect }) => {
         </Space>
       ),
     },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+          <Space size="middle">
+              <Button onClick={() => onVehicleSelect(record)}>View</Button>
+              <Button onClick={() => handleDelete(record.id)} danger>Delete</Button>
+          </Space>
+      ),
+  },
   ];
 
   return (

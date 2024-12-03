@@ -151,3 +151,18 @@ exports.updateVehicle = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.deleteVehicle = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const vehicle = await Vehicle.findByPk(id);
+        if (!vehicle) {
+            return res.status(404).json({ message: 'Vehicle not found' });
+        }
+
+        await vehicle.destroy();
+        res.status(204).send(); // No content
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
