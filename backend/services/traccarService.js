@@ -45,6 +45,36 @@ class TraccarService {
             throw new Error(`Failed to fetch events from Traccar API: ${error.message}`);
         }
     }
+
+    async getReportSummary(deviceId, from, to) {
+        try {
+            const response = await this.client.get('reports/summary', {
+                params: {
+                    deviceId,
+                    from,
+                    to
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(`Failed to fetch report summary from Traccar API: ${error.message}`);
+        }
+    }
+
+    async getReportTrips(deviceId, from, to) {
+        try {
+            const response = await this.client.get('reports/trips', {
+                params: {
+                    deviceId,
+                    from,
+                    to
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(`Failed to fetch report trips from Traccar API: ${error.message}`);
+        }
+    }
 }
 
 module.exports = TraccarService;
