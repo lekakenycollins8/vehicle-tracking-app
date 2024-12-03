@@ -10,7 +10,7 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 // Vehicle Routes (protected)
-router.use(authMiddleware); // Apply the middleware to protect the following routes
+router.use(authMiddleware); // Apply the middleware to protect routes
 router.get('/devices', vehicleController.getAllVehicles);
 router.get('/positions/:deviceId', vehicleController.getVehiclePositions);
 router.get('/events/:deviceId', vehicleController.getVehicleEvents);
