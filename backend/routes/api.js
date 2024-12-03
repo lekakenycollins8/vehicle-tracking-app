@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const vehicleController = require('../controllers/vehicleController');
+const reportsController = require('../controllers/reportsController');
 const authController = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
 
@@ -21,5 +22,9 @@ router.put('/devices/:id', vehicleController.updateVehicle);
 
 // Position history
 router.get('/devices/:id/history', vehicleController.getVehicleHistory);
+
+//vehicle reports
+router.get('/alerts', reportsController.getVehicleAlerts);
+router.get('/trips', reportsController.getVehicleTrips);
 
 module.exports = router;
