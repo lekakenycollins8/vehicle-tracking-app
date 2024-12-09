@@ -1,0 +1,16 @@
+.site-layout-background {
+    background: #001529; /* Dark background for sidebar */
+}
+
+.site-layout-header {
+    background: #1890ff; /* Header background color */
+}
+
+.ant-menu-item-selected {
+    background-color: #1890ff; /* Selected menu item color */
+}
+
+h1 {
+    font-size: 24px; /* Adjust header font size */
+    color: #fff; /* Header text color */
+} 

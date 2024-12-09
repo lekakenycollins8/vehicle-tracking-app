@@ -8,8 +8,29 @@ const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = () => {
-        dispatch(login(email, password));
+    const handleSubmit = async (values: any) => {
+        // Prevent default form submission
+        try {
+            const response = await fetch('http://localhost:8080/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json(); // Get error details from response
+                throw new Error(errorData.message || 'Login failed'); // Use error message from server
+            }
+
+            const data = await response.json();
+            // Dispatch login action with the received token and user data
+            dispatch(login(data.token, data.user));
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert(error.message); // Simple alert for demonstration
+        }
     };
 
     return (

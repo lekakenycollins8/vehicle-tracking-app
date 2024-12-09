@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ const RegisterForm: React.FC = () => {
 
     const onFinish = async (values: any) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/register`, values);
+            await axios.post(`${import.meta.env.VITE_APP_API_URL}/register`, values);
             message.success('Registration successful!');
             form.resetFields();
         } catch (error) {
