@@ -1,0 +1,34 @@
+.vehicle-list-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .vehicle-list-card .ant-card-head {
+    background-color: #f0f2f5;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .vehicle-table .ant-table-thead > tr > th {
+    background-color: #f0f2f5;
+    font-weight: 600;
+  }
+  
+  .vehicle-table .ant-table-tbody > tr:hover > td {
+    background-color: #e6f7ff;
+  }
+  
+  .vehicle-table .ant-btn {
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 768px) {
+    .vehicle-list-card .ant-card-body {
+      padding: 12px;
+    }
+  
+    .vehicle-table .ant-table-content {
+      overflow-x: auto;
+    }
+  }
+  
