@@ -1,0 +1,29 @@
+.device-form-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .device-form-card .ant-card-head {
+    background-color: #f0f2f5;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .device-form-card .ant-form-item-label > label {
+    font-weight: 600;
+  }
+  
+  .device-form-card .ant-input {
+    border-radius: 4px;
+  }
+  
+  .device-form-card .ant-btn {
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 576px) {
+    .device-form-card .ant-card-body {
+      padding: 16px;
+    }
+  }
+  
