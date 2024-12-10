@@ -51,8 +51,8 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title }) => {
   return (
     <StyledLayout>
     <StyledHeader>
-      <Logo src="/car.png" alt="Vehicle Tracking System" style={{ maxWidth: "150px" }} />
-      <Title level={5} style={{ marginBottom: '2rem' }}>{title}</Title>
+      <Logo src="/car.png" alt="VTS" style={{ maxWidth: '150px' }} />
+      <Title level={3}>{title}</Title>
     </StyledHeader>
       <StyledContent>
         <FormWrapper>{children}</FormWrapper>
@@ -65,4 +65,3 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title }) => {
 };
 
 export default AuthLayout;
-
