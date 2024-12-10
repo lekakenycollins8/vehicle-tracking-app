@@ -8,7 +8,7 @@ import VehicleHistory from './components/VehicleHistory';
 import VehicleMap from './components/VehicleMap';
 import VehicleDetail from './components/VehicleDetail';
 import VehicleEvents from './components/VehicleEvents';
-import VehicleForm from './components/VehicleForm';
+import VehicleForm from './components/DeviceForm';
 import VehicleUpdateForm from './components/VehicleUpdateForm';
 import LoginForm from './components/pages/LoginForm';
 import RegisterForm from './components/pages/RegistrationForm';
