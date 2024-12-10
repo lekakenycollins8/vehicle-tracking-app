@@ -1,0 +1,25 @@
+.vehicle-events-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .vehicle-events-card .ant-card-head {
+    background-color: #f0f2f5;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .events-table .ant-table-thead > tr > th {
+    background-color: #f0f2f5;
+    font-weight: 600;
+  }
+  
+  .events-table .ant-table-tbody > tr:hover > td {
+    background-color: #e6f7ff;
+  }
+  
+  @media (max-width: 768px) {
+    .vehicle-events-card .ant-card-body {
+      padding: 12px;
+    }
+  }  
