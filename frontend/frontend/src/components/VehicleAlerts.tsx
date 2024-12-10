@@ -1,76 +1,110 @@
-import React, { useState } from 'react';
-import { Table, message, DatePicker, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Card, Table, DatePicker, Space, Button, message, Spin } from 'antd';
+import { BellOutlined, SearchOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import moment from 'moment';
+import './styles/VehicleAlerts.css';
 
-const VehicleAlerts: React.FC<{ deviceId: number }> = ({ deviceId }) => {
-    const [alerts, setAlerts] = useState([]);
-    const [fromDate, setFromDate] = useState<moment.Moment | null>(null);
-    const [toDate, setToDate] = useState<moment.Moment | null>(null);
+const { RangePicker } = DatePicker;
 
-    const fetchAlerts = async () => {
-        if (!fromDate || !toDate) {
-            message.error('Please select both start and end dates.');
-            return;
-        }
+interface Alert {
+  id: string;
+  deviceId: string;
+  type: string;
+  alertTime: string;
+  message: string;
+}
 
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/alerts`, {
-                params: {
-                    deviceId: deviceId,
-                    from: fromDate.toISOString(),
-                    to: toDate.toISOString(),
-                },
-            });
-            setAlerts(response.data);
-        } catch (error) {
-            message.error('Failed to fetch alerts: ' + error.response.data.message);
-        }
-    };
+interface VehicleAlertsProps {
+  vehicleId: string;
+}
 
-    const columns = [
-        {
-            title: 'Device ID',
-            dataIndex: 'deviceId',
-        },
-        {
-            title: 'Device Name',
-            dataIndex: 'deviceName',
-        },
-        {
-            title: 'Max Speed',
-            dataIndex: 'maxSpeed',
-        },
-        {
-            title: 'Average Speed',
-            dataIndex: 'averageSpeed',
-        },
-        {
-            title: 'Distance',
-            dataIndex: 'distance',
-        },
-        {
-            title: 'Spent Fuel',
-            dataIndex: 'spentFuel',
-        },
-        {
-            title: 'Engine Hours',
-            dataIndex: 'engineHours',
-        },
-    ];
+const VehicleAlerts: React.FC<VehicleAlertsProps> = ({ vehicleId }) => {
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [dateRange, setDateRange] = useState<[moment.Moment | null, moment.Moment | null]>([null, null]);
 
-    return (
-        <div>
-            <DatePicker.RangePicker
-                onChange={(dates) => {
-                    setFromDate(dates ? dates[0] : null);
-                    setToDate(dates ? dates[1] : null);
-                }}
-            />
-            <Button type="primary" onClick={fetchAlerts}>Fetch Alerts</Button>
-            <Table columns={columns} dataSource={alerts} rowKey="deviceId" />
-        </div>
-    );
+  const fetchAlerts = async () => {
+    const [startDate, endDate] = dateRange;
+    if (!startDate || !endDate) {
+      message.error('Please select both start and end dates.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.get<Alert[]>(`${process.env.REACT_APP_API_URL}/alerts`, {
+        params: {
+          vehicleId,
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+        },
+      });
+      setAlerts(response.data);
+    } catch (error) {
+      message.error('Failed to fetch alerts: ' + (error as any).response?.data?.message || 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (dateRange[0] && dateRange[1]) {
+      fetchAlerts();
+    }
+  }, [vehicleId]);
+
+  const columns = [
+    {
+      title: 'Alert Type',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
+      title: 'Time',
+      dataIndex: 'alertTime',
+      key: 'alertTime',
+      render: (text: string) => new Date(text).toLocaleString(),
+    },
+    {
+      title: 'Message',
+      dataIndex: 'message',
+      key: 'message',
+    },
+  ];
+
+  return (
+    <Card
+      className="vehicle-alerts-card"
+      title={
+        <Space>
+          <BellOutlined />
+          <span>Vehicle Alerts</span>
+        </Space>
+      }
+    >
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <Space>
+          <RangePicker
+            onChange={(dates) => setDateRange(dates as [moment.Moment, moment.Moment])}
+            className="date-range-picker"
+          />
+          <Button type="primary" onClick={fetchAlerts} icon={<SearchOutlined />}>
+            Search Alerts
+          </Button>
+        </Space>
+        <Spin spinning={loading}>
+          <Table
+            columns={columns}
+            dataSource={alerts}
+            rowKey="id"
+            pagination={{ pageSize: 10 }}
+            className="alerts-table"
+          />
+        </Spin>
+      </Space>
+    </Card>
+  );
 };
 
 export default VehicleAlerts;

@@ -1,0 +1,35 @@
+.vehicle-alerts-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .vehicle-alerts-card .ant-card-head {
+    background-color: #f0f2f5;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .date-range-picker {
+    width: 300px;
+  }
+  
+  .alerts-table .ant-table-thead > tr > th {
+    background-color: #f0f2f5;
+    font-weight: 600;
+  }
+  
+  .alerts-table .ant-table-tbody > tr:hover > td {
+    background-color: #e6f7ff;
+  }
+  
+  @media (max-width: 768px) {
+    .vehicle-alerts-card .ant-card-body {
+      padding: 12px;
+    }
+  
+    .date-range-picker {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+  }
+  
