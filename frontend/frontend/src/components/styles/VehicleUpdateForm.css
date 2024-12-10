@@ -1,0 +1,28 @@
+.vehicle-update-form-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .vehicle-update-form-card .ant-card-head {
+    background-color: #f0f2f5;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .vehicle-update-form-card .ant-form-item-label > label {
+    font-weight: 600;
+  }
+  
+  .vehicle-update-form-card .ant-input {
+    border-radius: 4px;
+  }
+  
+  .vehicle-update-form-card .ant-btn {
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 576px) {
+    .vehicle-update-form-card .ant-card-body {
+      padding: 16px;
+    }
+  }  
