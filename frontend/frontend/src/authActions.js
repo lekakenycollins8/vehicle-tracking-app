@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from 'antd';
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -9,8 +10,10 @@ export const login = (email, password) => async (dispatch) => {
         localStorage.setItem('token', token);
 
         dispatch({ type: 'LOGIN', payload: { user, token } });
+        message.success('Login successful!');
     } catch (error) {
         console.error('Login failed:', error);
+        message.error(error.response?.data?.message || 'Login failed'); // Display error message
     }
 };
 
