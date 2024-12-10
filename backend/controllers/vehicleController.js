@@ -2,6 +2,7 @@ const Vehicle = require('../models/Vehicle');
 const Position = require('../models/Position');
 const traccarService = require('../services/traccarService');
 const { Op } = require('sequelize');
+const axios = require('axios');
 
 
 exports.getAllVehicles = async (req, res) => {
@@ -102,6 +103,25 @@ exports.createVehicle = async (req, res) => {
             category,
             attributes
         });
+
+        const traccarResponse = await axios.post(`${process.env.TRACCAR_API_URL}/devices`, {
+            name,
+            uniqueId,
+            status,
+            model,
+            contact
+        }, {
+            headers: {
+                'Authorization': `${process.env.TRACCAR_API_TOKEN}`, 
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (traccarResponse.status === 201) {
+            console.log('Device created in Traccar:', traccarResponse.data);
+        } else {
+            console.error('Failed to create device in Traccar:', traccarResponse.data);
+        }
 
         res.status(201).json(vehicle);
     } catch (error) {

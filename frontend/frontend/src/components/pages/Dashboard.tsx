@@ -11,23 +11,37 @@ const Dashboard: React.FC = () => {
     <Layout className="dashboard-layout">
       <Sider width={200} className="dashboard-sider">
         <div className="logo">Vehicle Tracker</div>
-        <Menu mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<CarOutlined />}>
-            <Link to="/dashboard/vehicles">Vehicles</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<BellOutlined />}>
-            <Link to="/dashboard/alerts">Alerts</Link>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<CompassOutlined />}>
-            <Link to="/dashboard/trips">Trips</Link>
-          </Menu.Item>
-          <Menu.Item key="4" icon={<HistoryOutlined />}>
-            <Link to="/dashboard/history">History</Link>
-          </Menu.Item>
-          <Menu.Item key="5" icon={<PlusOutlined />}>
-            <Link to="/dashboard/vehicles/create">Create Vehicle</Link>
-          </Menu.Item>
-        </Menu>
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          items={[
+            {
+              key: '1',
+              icon: <CarOutlined />,
+              label: <Link to="/dashboard/vehicles">Vehicles</Link>,
+            },
+            {
+              key: '2',
+              icon: <BellOutlined />,
+              label: <Link to="/dashboard/alerts">Alerts</Link>,
+            },
+            {
+              key: '3',
+              icon: <CompassOutlined />,
+              label: <Link to="/dashboard/trips">Trips</Link>,
+            },
+            {
+              key: '4',
+              icon: <HistoryOutlined />,
+              label: <Link to="/dashboard/history">History</Link>,
+            },
+            {
+              key: '5',
+              icon: <PlusOutlined />,
+              label: <Link to="/dashboard/vehicles/create">Create Vehicle</Link>,
+            },
+          ]}
+        />
       </Sider>
       <Layout>
         <Header className="dashboard-header">

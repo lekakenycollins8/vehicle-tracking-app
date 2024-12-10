@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Card, message, Space } from 'antd';
+import { Form, Input, Button, Card, message, Space, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import './styles/DeviceForm.css';
@@ -7,6 +7,8 @@ import './styles/DeviceForm.css';
 interface DeviceFormProps {
   onDeviceAdded: () => void;
 }
+
+const { Option } = Select;
 
 const DeviceForm: React.FC<DeviceFormProps> = ({ onDeviceAdded }) => {
   const [form] = Form.useForm();
@@ -50,9 +52,12 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ onDeviceAdded }) => {
         <Form.Item
           name="status"
           label="Status"
-          rules={[{ required: true, message: 'Please input the status!' }]}
+          rules={[{ required: true, message: 'Please select the status!' }]}
         >
-          <Input />
+          <Select placeholder="Select status">
+            <Option value="active">Active</Option>
+            <Option value="inactive">Inactive</Option>
+          </Select>
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" icon={<PlusOutlined />}>

@@ -10,21 +10,15 @@ const sequelize = require('./config/db');
 const apiRoutes = require('./routes/api');
 const positionSyncService = require('./services/positionSyncService');
 
+// CORS configuration
+const corsOptions = {
+    origin: '*', // or specify your frontend domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
-// API Routes
-app.use('/api', apiRoutes);
-
-// Initialize position sync service
-const SYNC_INTERVAL = 30000; // 30 seconds
-setInterval(() => {
-    positionSyncService.syncVehiclePositions();
-}, SYNC_INTERVAL);
-
-// Server connection
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Rest of your code remains the same...
