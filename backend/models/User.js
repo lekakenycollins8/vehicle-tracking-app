@@ -6,21 +6,21 @@ const User = sequelize.define('User', {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     email: {
         type: DataTypes.STRING,
-        unique: false,
-        allowNull: false
+        unique: true,
+        allowNull: false,
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
-    }
+        allowNull: false,
+    },
 });
 
 module.exports = User;

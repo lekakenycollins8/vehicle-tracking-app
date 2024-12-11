@@ -10,7 +10,11 @@ const Position = sequelize.define('Position', {
     },
     vehicleId: {
         type: DataTypes.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: Vehicle,
+            key: 'id'
+        }
     },
     latitude: {
         type: DataTypes.DECIMAL(10, 8),
@@ -32,15 +36,6 @@ const Position = sequelize.define('Position', {
         type: DataTypes.JSON,
         allowNull: true
     }
-});
-
-// Define the association with the correct foreign key
-Position.belongsTo(Vehicle, {
-    foreignKey: 'vehicleId'
-});
-
-Vehicle.hasMany(Position, {
-    foreignKey: 'vehicleId'
 });
 
 module.exports = Position;

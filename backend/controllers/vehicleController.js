@@ -66,63 +66,23 @@ exports.getVehicleHistory = async (req, res) => {
 
 
 exports.createVehicle = async (req, res) => {
+    const { name, uniqueId, category, attributes } = req.body;
+    const userId = req.userId;
+
+    // Validate required fields
+    if (!name || !uniqueId || !userId) {
+        return res.status(400).json({ message: 'Name, uniqueId, and userId are required.' });
+    }
+
     try {
-        const {
-            name,
-            uniqueId,
-            status,
-            disabled,
-            lastUpdate,
-            positionId,
-            groupId,
-            phone,
-            model,
-            contact,
-            category,
-            attributes
-        } = req.body;
-
-        // Validate required fields
-        if (!name || !uniqueId || !status || !lastUpdate) {
-            return res.status(400).json({
-                message: 'Name, uniqueId, status, and lastUpdate are required'
-            });
-        }
-
+        // Create the vehicle with the associated userId and other fields
         const vehicle = await Vehicle.create({
             name,
             uniqueId,
-            status,
-            disabled: disabled || false,
-            lastUpdate: new Date(lastUpdate),
-            positionId,
-            groupId,
-            phone,
-            model,
-            contact,
-            category,
-            attributes
+            userId, // Associate the vehicle with the user
+            category, // Optional field
+            attributes // Optional field, can be JSON
         });
-
-        const traccarResponse = await axios.post(`${process.env.TRACCAR_API_URL}/devices`, {
-            name,
-            uniqueId,
-            status,
-            model,
-            contact
-        }, {
-            headers: {
-                'Authorization': `${process.env.TRACCAR_API_TOKEN}`, 
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (traccarResponse.status === 201) {
-            console.log('Device created in Traccar:', traccarResponse.data);
-        } else {
-            console.error('Failed to create device in Traccar:', traccarResponse.data);
-        }
-
         res.status(201).json(vehicle);
     } catch (error) {
         res.status(500).json({ message: error.message });

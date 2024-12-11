@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const User = require('./User');
 
 const Vehicle = sequelize.define('Vehicle', {
     id: {
@@ -7,6 +8,14 @@ const Vehicle = sequelize.define('Vehicle', {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         allowNull: false
+    },
+    userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+            model: User,
+            key: 'id'
+        }
     },
     name: {
         type: DataTypes.STRING,
@@ -18,29 +27,17 @@ const Vehicle = sequelize.define('Vehicle', {
         allowNull: false
     },
     lastUpdate: {
-        type: DataTypes.DATE, 
-        allowNull: true
+        type: DataTypes.DATE,
+        allowNull: false
     },
     status: {
-        type: DataTypes.ENUM('active', 'inactive'), 
+        type: DataTypes.ENUM('active', 'inactive'),
         defaultValue: 'active',
         allowNull: false
     },
     disabled: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
-    },
-    lastUpdate: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    positionId: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-    groupId: {
-        type: DataTypes.INTEGER,
-        allowNull: true
     },
     phone: {
         type: DataTypes.STRING,
