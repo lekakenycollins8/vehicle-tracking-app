@@ -8,6 +8,7 @@ export const login = (email, password) => async (dispatch) => {
 
         // Store the token in local storage
         localStorage.setItem('token', token);
+        localStorage.setItem('userId', user.id);
 
         dispatch({ type: 'LOGIN', payload: { user, token } });
         message.success('Login successful!');

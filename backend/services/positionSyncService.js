@@ -10,7 +10,10 @@ class PositionSyncService {
     async syncVehiclePositions() {
         try {
             const vehicles = await Vehicle.findAll({
-                where: { status: 'active' }
+                where: {
+                    status: 'active',
+                    userId: userId
+                }
             });
 
             for (const vehicle of vehicles) {

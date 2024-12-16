@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 import { CarOutlined, BellOutlined, CompassOutlined, HistoryOutlined, PlusOutlined } from '@ant-design/icons';
@@ -7,9 +7,17 @@ import '../styles/Dashboard.css';
 const { Header, Sider, Content } = Layout;
 
 const Dashboard: React.FC = () => {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
     <Layout className="dashboard-layout">
-      <Sider width={200} className="dashboard-sider">
+      <Sider
+        width={200}
+        className="dashboard-sider"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(collapsed) => setCollapsed(collapsed)}
+      >
         <div className="logo">Vehicle Tracker</div>
         <Menu
           mode="inline"

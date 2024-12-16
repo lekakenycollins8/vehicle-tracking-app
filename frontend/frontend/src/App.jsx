@@ -14,6 +14,7 @@ import LoginForm from './components/pages/LoginForm';
 import RegisterForm from './components/pages/RegistrationForm';
 
 const App = () => {
+    const userId = localStorage.getItem('userId');
     return (
         <Router>
             <Routes>
@@ -27,7 +28,7 @@ const App = () => {
                     <Route path="vehicles/:id" element={<VehicleDetail />} />
                     <Route path="vehicles/:id/map" element={<VehicleMap />} />
                     <Route path="vehicles/:id/events" element={<VehicleEvents />} />
-                    <Route path="vehicles/create" element={<VehicleForm />} />
+                    <Route path="vehicles/create" element={<VehicleForm userId={userId} />} />
                     <Route path="vehicles/:id/update" element={<VehicleUpdateForm />} />
                 </Route>
             </Routes>

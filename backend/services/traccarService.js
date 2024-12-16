@@ -22,6 +22,37 @@ class TraccarService {
         }
     }
 
+    async createDevice(deviceData) {
+        try {
+            const response = await this.client.post('/devices', deviceData);
+            return response.data;
+        } catch (error) {
+            throw new Error(`Failed to create device in Traccar API: ${error.message}`);
+        }
+    }
+
+    async getDeviceByUniqueId(uniqueId) {
+        try {
+            const response = await this.client.get('/devices', {
+                params: {
+                    uniqueId
+                }
+            });
+            return response.data.length > 0 ? response.data[0] : null;
+        } catch (error) {
+            throw new Error(`Failed to fetch device by uniqueId from Traccar API: ${error.message}`);
+        }
+    }
+
+    async updateDevice(deviceId, deviceData) {
+        try {
+            const response = await this.client.put(`/devices/${deviceId}`, deviceData);
+            return response.data;
+        } catch (error) {
+            throw new Error(`Failed to update device in Traccar API: ${error.message}`);
+        }
+    }
+
     async getPositions(deviceId) {
         try {
             const response = await this.client.get(`positions?deviceId=${deviceId}`);

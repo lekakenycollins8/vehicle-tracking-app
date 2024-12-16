@@ -1,15 +1,16 @@
 export interface Vehicle {
     id: string;
+    userId: string;
     name: string;
-    traccarDeviceId: string;
-    lastPosition: {
-      deviceTime: string;
-      latitude: number;
-      longitude: number;
-      speed: number;
-      attributes: any;
-    } | null;
+    uniqueId: string;
+    lastUpdate: string;
     status: 'active' | 'inactive';
+    disabled: boolean;
+    phone?: string;
+    model?: string;
+    contact?: string;
+    category?: string;
+    attributes?: any;
     createdAt: string;
     updatedAt: string;
   }
@@ -21,5 +22,5 @@ export interface Vehicle {
     longitude: number;
     speed: number;
     timestamp: string;
-    attributes: any;
+    attributes?: any;
   }

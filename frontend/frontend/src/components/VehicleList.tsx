@@ -62,8 +62,8 @@ const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect, onVehicleDel
       title: 'Last Updated',
       key: 'lastPosition',
       render: (_, record) => (
-        record.lastPosition ? 
-        new Date(record.lastPosition.deviceTime).toLocaleString() : 
+        record.lastUpdate ? 
+        new Date(record.lastUpdate).toLocaleString() : 
         'No data'
       ),
     },

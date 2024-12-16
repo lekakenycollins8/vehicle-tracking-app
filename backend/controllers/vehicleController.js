@@ -7,7 +7,7 @@ const axios = require('axios');
 
 exports.getAllVehicles = async (req, res) => {
     try {
-        const vehicles = await Vehicle.findAll();
+        const vehicles = await Vehicle.findAll( { where: { userId: req.userId } });
         res.json(vehicles);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -74,7 +74,16 @@ exports.createVehicle = async (req, res) => {
         return res.status(400).json({ message: 'Name, uniqueId, and userId are required.' });
     }
 
+    let vehicle;
+
     try {
+
+        // Check if the vehicle already exists
+        const existingDevice = await traccarService.getDeviceByUniqueId(uniqueId);
+
+        if (existingDevice) {
+            return res.status(400).json({ message: 'Vehicle already exists' });
+        }
         // Create the vehicle with the associated userId and other fields
         const vehicle = await Vehicle.create({
             name,
@@ -83,9 +92,27 @@ exports.createVehicle = async (req, res) => {
             category, // Optional field
             attributes // Optional field, can be JSON
         });
+
+        // Register the device with Traccar API
+        const traccarDevice = await traccarService.createDevic({
+            name,
+            uniqueId,
+            status: 'active', // Default status
+            attributes
+        });
+
+        // Link traccar deviceId to the vehicle
+
+        vehicle.traccarDeviceId = traccarDevice.id;
+        await vehicle.save();
+
         res.status(201).json(vehicle);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        // Rollback the vehicle creation if it fails
+        if (vehicle) {
+            await vehicle.destroy();
+        }
+        res.status(500).json({ message: `Vehicle creation failed: ${error.message}` });
     }
 };
 
@@ -108,7 +135,7 @@ exports.updateVehicle = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, status } = req.body;
-        
+
         const vehicle = await Vehicle.findByPk(id);
         if (!vehicle) {
             return res.status(404).json({ message: 'Vehicle not found' });
@@ -124,6 +151,12 @@ exports.updateVehicle = async (req, res) => {
         await vehicle.update({
             ...(name && { name }),
             ...(status && { status })
+        });
+
+        // Update the device with Traccar API
+        await traccarService.updateDevice(vehicle.uniqueId, {
+            name,
+            status
         });
 
         res.json(vehicle);
