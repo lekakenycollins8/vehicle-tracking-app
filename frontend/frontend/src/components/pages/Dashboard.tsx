@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { Layout, Menu } from 'antd';
-import { Link, Outlet } from 'react-router-dom';
+import { Layout, Menu, Button } from 'antd';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { CarOutlined, BellOutlined, CompassOutlined, HistoryOutlined, PlusOutlined } from '@ant-design/icons';
+import { logout } from '../../authActions';
+import { useDispatch } from 'react-redux';
 import '../styles/Dashboard.css';
 
 const { Header, Sider, Content } = Layout;
 
 const Dashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+      dispatch(logout());
+      navigate('/'); // Redirect to login page after logout
+  };
 
   return (
     <Layout className="dashboard-layout">
@@ -51,11 +60,13 @@ const Dashboard: React.FC = () => {
           ]}
         />
       </Sider>
-      <Layout>
-        <Header className="dashboard-header">
-          <h1>Vehicle Tracking Dashboard</h1>
+      <Layout style={{ padding: '0 24px 24px' }}>
+        <Header style={{ background: '#fff', padding: 0 }}>
+          <Button type="primary" onClick={handleLogout} style={{ float: 'right', margin: '16px' }}>Logout</Button>
         </Header>
-        <Content className="dashboard-content">
+        <Content
+          style={{ padding: 24, margin: 0, minHeight: 280 }}
+        >
           <Outlet />
         </Content>
       </Layout>

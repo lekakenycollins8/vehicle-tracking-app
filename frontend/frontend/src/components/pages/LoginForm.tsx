@@ -28,17 +28,21 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (values: any) => {
     try {
-      await dispatch(login(values.email, values.password));
-      navigate('/dashboard');
+        await dispatch(login(values.email, values.password));
+        // Only navigate to the dashboard if the login is successful
+        navigate('/dashboard');
     } catch (error) {
-      form.setFields([
-        {
-          name: 'password',
-          errors: ['Invalid email or password'],
-        },
-      ]);
+        // Set error message for invalid credentials
+        form.setFields([
+            {
+                name: 'password',
+                errors: ['Invalid email or password'],
+            },
+        ]);
+        // Optionally log the error for debugging
+        console.error('Login failed:', error);
     }
-  };
+};
 
   return (
     <AuthLayout title="Login to Your Account">

@@ -13,30 +13,34 @@ class TraccarService {
             }
         });
     }
-    async getDevices() {
+    async getDevices(userId) {
         try {
-            const response = await this.client.get('/devices');
+            const response = await this.client.get('/devices', {
+                headers: { 'User-ID': userId } // Include user context
+            });
             return response.data;
         } catch (error) {
             throw new Error(`Failed to fetch devices from Traccar API: ${error.message}`);
         }
     }
 
-    async createDevice(deviceData) {
+    async createDevice(deviceData, userId) {
         try {
-            const response = await this.client.post('/devices', deviceData);
+            const response = await this.client.post('/devices', {
+                ...deviceData,
+                userId // Include user context
+            });
             return response.data;
         } catch (error) {
             throw new Error(`Failed to create device in Traccar API: ${error.message}`);
         }
     }
 
-    async getDeviceByUniqueId(uniqueId) {
+    async getDeviceByUniqueId(uniqueId, userId) {
         try {
             const response = await this.client.get('/devices', {
-                params: {
-                    uniqueId
-                }
+                params: { uniqueId },
+                headers: { 'User-ID': userId } // Include user context
             });
             return response.data.length > 0 ? response.data[0] : null;
         } catch (error) {
@@ -44,9 +48,12 @@ class TraccarService {
         }
     }
 
-    async updateDevice(deviceId, deviceData) {
+    async updateDevice(deviceId, deviceData, userId) {
         try {
-            const response = await this.client.put(`/devices/${deviceId}`, deviceData);
+            const response = await this.client.put(`/devices/${deviceId}`, {
+                ...deviceData,
+                userId // Include user context
+            });
             return response.data;
         } catch (error) {
             throw new Error(`Failed to update device in Traccar API: ${error.message}`);

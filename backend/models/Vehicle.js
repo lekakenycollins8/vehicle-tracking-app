@@ -28,7 +28,7 @@ const Vehicle = sequelize.define('Vehicle', {
     },
     lastUpdate: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
     },
     status: {
         type: DataTypes.ENUM('active', 'inactive'),

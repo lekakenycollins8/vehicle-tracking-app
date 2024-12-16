@@ -16,27 +16,30 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ onDeviceAdded, userId }) => {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
-        const requestData = {
-      ...values,
-      userId,
+    const requestData = {
+        ...values,
+        userId,
     };
 
     console.log('Submitting values:', requestData);
     setLoading(true); // Start loading spinner
     try {
-      await axios.post(`${import.meta.env.VITE_APP_API_URL}/devices`, requestData);
-      message.success('Device created successfully!');
-      form.resetFields();
-      onDeviceAdded();
+        const token = localStorage.getItem('token'); // Retrieve the token
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/devices`, requestData, {
+            headers: { 'Authorization': `Bearer ${token}` } // Include token in headers
+        });
+        message.success('Device created successfully!');
+        form.resetFields();
+        onDeviceAdded();
     } catch (error) {
-      console.error('Error creating device:', error.response?.data);
-      if (error.response?.data?.message.includes('Unique ID is already registered')) {
-        message.error('The unique ID is already registered in Traccar. Please use a different ID.');
-      } else {
-        message.error('Failed to create device: ' + (error.response?.data?.message || 'Unknown error'));
-      }
+        console.error('Error creating device:', error.response?.data);
+        if (error.response?.data?.message.includes('Unique ID is already registered')) {
+            message.error('The unique ID is already registered in Traccar. Please use a different ID.');
+        } else {
+            message.error('Failed to create device: ' + (error.response?.data?.message || 'Unknown error'));
+        }
     } finally {
-      setLoading(false); // Stop loading spinner
+        setLoading(false); // Stop loading spinner
     }
   };
 

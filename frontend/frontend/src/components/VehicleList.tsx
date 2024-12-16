@@ -31,15 +31,24 @@ const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect, onVehicleDel
   }, []);
 
   const fetchVehicles = async () => {
+    const userId = localStorage.getItem('userId'); // Get userId from local storage
+    const token = localStorage.getItem('token'); // Get token from local storage
+    console.log('Token before API request:', token); // Log the token for debugging
     try {
-      const response = await axiosInstance.get<Vehicle[]>('/devices');
+      const response = await axiosInstance.get<Vehicle[]>('/devices', {
+        headers: { 'Authorization': `Bearer ${token}` }, // Include token in headers
+        params: { userId } // Include userId in the request
+      });
+      console.log('Fetched vehicles:', response.data); // Log the fetched vehicle data
+      console.log('Inspecting fetched vehicle data:', response.data); // Inspect the fetched vehicle data
+      console.log('Inspecting fetched vehicle data before setting state:', response.data); // Inspect the fetched vehicle data before setting state
       setVehicles(response.data);
     } catch (error) {
       console.error('Error fetching vehicles:', error);
       message.error('Failed to fetch vehicles');
     } finally {
       setLoading(false);
-    }
+    };
   };
 
   const columns: ColumnsType<Vehicle> = [
@@ -116,13 +125,17 @@ const VehicleList: React.FC<VehicleListProps> = ({ onVehicleSelect, onVehicleDel
       }
     >
       <Spin spinning={loading}>
-        <Table
-          columns={columns}
-          dataSource={vehicles}
-          rowKey="id"
-          pagination={{ pageSize: 10 }}
-          className="vehicle-table"
-        />
+        {vehicles.length > 0 ? (
+          <Table
+            columns={columns}
+            dataSource={vehicles}
+            rowKey="id"
+            pagination={{ pageSize: 10 }}
+            className="vehicle-table"
+          />
+        ) : (
+          <div>No vehicles found.</div> // Message when no vehicles are available
+        )}
       </Spin>
     </Card>
   );

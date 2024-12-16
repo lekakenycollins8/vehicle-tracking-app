@@ -8,7 +8,7 @@ import VehicleHistory from './components/VehicleHistory';
 import VehicleMap from './components/VehicleMap';
 import VehicleDetail from './components/VehicleDetail';
 import VehicleEvents from './components/VehicleEvents';
-import VehicleForm from './components/DeviceForm';
+import DeviceForm from './components/DeviceForm';
 import VehicleUpdateForm from './components/VehicleUpdateForm';
 import LoginForm from './components/pages/LoginForm';
 import RegisterForm from './components/pages/RegistrationForm';
@@ -28,7 +28,7 @@ const App = () => {
                     <Route path="vehicles/:id" element={<VehicleDetail />} />
                     <Route path="vehicles/:id/map" element={<VehicleMap />} />
                     <Route path="vehicles/:id/events" element={<VehicleEvents />} />
-                    <Route path="vehicles/create" element={<VehicleForm userId={userId} />} />
+                    <Route path="vehicles/create" element={<DeviceForm userId={userId} />} />
                     <Route path="vehicles/:id/update" element={<VehicleUpdateForm />} />
                 </Route>
             </Routes>

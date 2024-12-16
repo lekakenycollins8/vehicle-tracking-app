@@ -28,8 +28,12 @@ const VehicleUpdateForm: React.FC<VehicleUpdateFormProps> = ({ vehicleId, onVehi
   }, [vehicleId, form]);
 
   const onFinish = async (values: any) => {
+    const userId = localStorage.getItem('userId'); // Get userId from local storage
     try {
-      await axios.put(`${process.env.REACT_APP_API_URL}/devices/${vehicleId}`, values);
+      await axios.put(`${process.env.REACT_APP_API_URL}/devices/${vehicleId}`, {
+        ...values,
+        userId // Include userId in the update request
+      });
       message.success('Vehicle updated successfully!');
       onVehicleUpdated();
     } catch (error) {
